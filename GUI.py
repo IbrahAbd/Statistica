@@ -3,15 +3,14 @@ from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 
 champ = "Jhin"
+role = "adc"
 
-rates = output(champ)
+rates = output(champ,role)
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('GUI.ui', self) 
-
-
         
         self.display_image(f'E:\github\Statistica\Images\{champ}.png')
 

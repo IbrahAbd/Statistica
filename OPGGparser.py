@@ -34,8 +34,8 @@ def parse_rates(html):
         return None
 
 # Main function to get and display Jhin's win rate and pick rate
-def output(champ):
-    url = f'https://www.op.gg/champions/{champ}/build/adc'
+def output(champ,role):
+    url = f'https://www.op.gg/champions/{champ}/build/{role}'
     html = get_page_html(url)
     if html:
         rates = parse_rates(html)
@@ -45,4 +45,3 @@ def output(champ):
             print("Could not find the win rate and pick rate on the page.")
     else:
         print("Failed to retrieve the page.")
-
