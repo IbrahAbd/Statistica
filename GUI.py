@@ -2,7 +2,7 @@ import sys
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 
-champ = "Ziggs" # this is a comment from connor2
+champ = "Jhin" # this is a comment from connor2
 role = "adc"
 
 rates = output(champ,role)
@@ -12,7 +12,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi('GUI.ui', self) 
         
-        self.display_image(f'E:\github\Statistica\Images\{champ}.png')
+        self.display_image(f'Images\{champ}.png')
 
         font = QtGui.QFont()
         font.setPointSize(40)  
@@ -25,9 +25,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.WinRate.setText("Win rate: " + rates['win_rate'])
         self.WinRate.setFont(font2)
+        self.WinRate.setStyleSheet("color: green;")
 
         self.BanRate.setText("Ban rate: " + rates['ban_rate'])
         self.BanRate.setFont(font2)
+        self.BanRate.setStyleSheet("color: red;")
 
         self.PickRate.setText("Pick rate: " + rates['pick_rate'])
         self.PickRate.setFont(font2)
