@@ -2,7 +2,7 @@ import sys
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 
-champ = "Jhin"
+champ = "Ziggs" # this is a comment from connor2
 role = "adc"
 
 rates = output(champ,role)
@@ -52,6 +52,4 @@ if __name__ == "__main__":
     mainWindow.show()
     sys.exit(app.exec_())
 
-
-
-
+    print("dog")
