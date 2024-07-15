@@ -1,4 +1,5 @@
 import requests
+import time
 from bs4 import BeautifulSoup
 
 # Function to get the HTML content of the page
@@ -7,6 +8,7 @@ def get_page_html(url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
     response = requests.get(url, headers=headers)
+    time.sleep(10)
     if response.status_code == 200:
         return response.text
     else:
@@ -20,8 +22,9 @@ def parse_rates(html):
     soup = BeautifulSoup(html, 'html.parser')
     combo = {}
     
-    # Find all elements with the class 'css-oxevym e1y855lo3'
-    winR = (soup.find('div', class_='win-rate okay-tier')).get_text().strip()
+    # The winR below is to find the first instance of win-rate. 
+    # They are many weird names and this is the easiest way to fix the problem I think?
+    winR = (soup.find(lambda tag: tag.name == 'div' and 'win-rate' in tag.get('class', []))).get_text().strip()
     pickR = (soup.find('div', class_='pick-rate')).get_text().strip()
     banR = (soup.find('div', class_='ban-rate')).get_text().strip()
     
@@ -32,7 +35,6 @@ def parse_rates(html):
     return combo
 
 
-# Main function to get and display Jhin's win rate and pick rate
 def output(champ,role):
     url = f'https://u.gg/lol/champions/{champ}/build/{role}?rank=overall'
     html = get_page_html(url)

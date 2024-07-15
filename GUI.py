@@ -1,9 +1,11 @@
 import sys
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
+from PyQt5.QtGui import QPixmap
 
-champ = "Jhin" # this is a comment from connor2
-role = "adc"
+roles = ["Top","Jungle","ADC","Mid","Support"]
+champ = "Zac" 
+role = roles[0]
 
 rates = output(champ,role)
 
@@ -18,6 +20,11 @@ class MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(40)  
         self.name.setText(champ)
         self.name.setFont(font)
+
+        pixmap = QPixmap(f'Roles\{role}.png')
+        self.roleIMG.setPixmap(pixmap)
+        self.roleIMG.setPixmap(pixmap.scaled(self.roleIMG.size(), aspectRatioMode=True))
+        self.roleIMG.resize(pixmap.width(), pixmap.height())
 
 
         font2 = QtGui.QFont()
@@ -34,17 +41,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.PickRate.setText("Pick rate: " + rates['pick_rate'])
         self.PickRate.setFont(font2)
 
+        self.role.setText(role)
+        self.role.setFont(font2)
         
 
     def display_image(self, image_path):
         pixmap = QtGui.QPixmap(image_path)
         if not pixmap.isNull():
-            # Scale the pixmap to fit the label while preserving aspect ratio
             scaled_pixmap = pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
             
-            # Set the scaled pixmap as label's pixmap
             self.label.setPixmap(scaled_pixmap)
-            self.label.setAlignment(QtCore.Qt.AlignCenter)  # Optional: Center the image in the label
+            self.label.setAlignment(QtCore.Qt.AlignCenter) 
         else:
             print(f"Error: Unable to load image from {image_path}")
 

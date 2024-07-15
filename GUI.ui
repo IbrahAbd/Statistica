@@ -116,6 +116,32 @@ p, li { white-space: pre-wrap; }
      <string>Pick rate</string>
     </property>
    </widget>
+   <widget class="QLabel" name="role">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>180</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Role</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="roleIMG">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/role/top.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -131,6 +157,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="Images/test.qrc"/>
+  <include location="Roles/roles.qrc"/>
  </resources>
  <connections/>
 </ui>
