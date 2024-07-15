@@ -23,8 +23,8 @@ def parse_rates(html):
     if rate_elements and len(rate_elements) >= 3:
         win_rate = rate_elements[0].get_text().strip()
         pick_rate = rate_elements[1].get_text().strip()
-       	ban_rate = rate_elements[2].get_text().strip()
-        
+        ban_rate = rate_elements[2].get_text().strip()
+
         combo['win_rate'] = win_rate
         combo['pick_rate'] = pick_rate
         combo['ban_rate'] = ban_rate
@@ -34,21 +34,15 @@ def parse_rates(html):
         return None
 
 # Main function to get and display Jhin's win rate and pick rate
-def main():
-    champ = "Kaisa"
+def output(champ):
     url = f'https://www.op.gg/champions/{champ}/build/adc'
     html = get_page_html(url)
     if html:
         rates = parse_rates(html)
         if rates:
-            print(champ)
-            print(f"Win Rate: {rates['win_rate']}")
-            print(f"Pick Rate: {rates['pick_rate']}")
-            print(f"Ban rate: {rates['ban_rate']}\n")
+            return rates
         else:
             print("Could not find the win rate and pick rate on the page.")
     else:
         print("Failed to retrieve the page.")
 
-if __name__ == '__main__':
-    main()
