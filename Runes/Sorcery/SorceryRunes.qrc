@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="Sorcery">
+    <file>6361.png</file>
+    <file>AbsoluteFocus.png</file>
+    <file>ArcaneComet.png</file>
+    <file>Celerity.png</file>
+    <file>GatheringStorm.png</file>
+    <file>ManaflowBand.png</file>
+    <file>NullifyingOrb.png</file>
+    <file>PhaseRush.png</file>
+    <file>Scorch.png</file>
+    <file>SorceryRunes.qrc</file>
+    <file>SummonAery.png</file>
+    <file>TheUltimateHat.png</file>
+    <file>Transcendence.png</file>
+    <file>Waterwalking.png</file>
+  </qresource>
+</RCC>

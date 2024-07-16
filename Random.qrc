@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="rano">
+    <file>Runes/StatModsAdaptiveForceScalingIcon.png</file>
+    <file>Runes/StatModsArmorIcon.png</file>
+    <file>Runes/StatModsMagicResIcon.png</file>
+    <file>Runes/The Ability Haste Shard.png</file>
+    <file>Runes/The Adaptive Force Shard.png</file>
+    <file>Runes/The Attack Speed Shard.png</file>
+    <file>Runes/The Health Scaling Shard.png</file>
+    <file>Runes/The Health Shard.png</file>
+    <file>Runes/The Move Speed Shard.png</file>
+    <file>Runes/The Tenacity and Slow Resist Shard.png</file>
+    <file>Runes/Sorcery.png</file>
+  </qresource>
+</RCC>

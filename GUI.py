@@ -4,12 +4,17 @@ from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
 
+#TODO: Get hover text working for runes
+#TODO: Change backround colour
+#TODO: Add champion abilities and passive with hovering working.
+
+
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('GUI.ui', self) 
 
-        champ = "Jhin" 
+        champ = "Zeri" 
 
         start_time = time.time()
         rates = output(champ)
@@ -65,11 +70,67 @@ class MainWindow(QtWidgets.QMainWindow):
         self.role.setText(role)
         self.role.setFont(font2)
 
-        #pixmapMainRune = QPixmap(f'SummonerSpells\{sumSpell2}.png')
-        #self.Summoner2.setPixmap(pixmapMainRune)
-        #self.Summoner2.setPixmap(pixmapMainRune.scaled(self.Summoner2.size(), aspectRatioMode=True))
-        #self.Summoner2.resize(pixmapMainRune.width(), pixmapMainRune.height())
 
+        rune1 = rates['MainRuneName']
+        rune2 = rates['SecondaryRuneName']
+        primaryRune = rates['MainPrimaryRune'].replace(" ", "")
+        runes = rates['MinorRunes']
+
+
+        pixmapMainRune = QPixmap(f'Runes\{rune1}\{primaryRune}.png')
+        self.MainRune.setPixmap(pixmapMainRune)
+        self.MainRune.setPixmap(pixmapMainRune.scaled(self.MainRune.size(), aspectRatioMode=True))
+        self.MainRune.resize(pixmapMainRune.width(), pixmapMainRune.height())
+
+        pixmapSecondaryRune = QPixmap(f'Runes\{rune2}.png')
+        self.SecondaryRune.setPixmap(pixmapSecondaryRune)
+        self.SecondaryRune.setPixmap(pixmapSecondaryRune.scaled(self.SecondaryRune.size(), aspectRatioMode=True))
+        self.SecondaryRune.resize(pixmapSecondaryRune.width(), pixmapSecondaryRune.height())
+
+        pixmapPrimaryRune1 = QPixmap(f'Runes\{rune1}\{runes[0]}.png')
+        self.MainRune1.setPixmap(pixmapPrimaryRune1)
+        self.MainRune1.setPixmap(pixmapPrimaryRune1.scaled(self.MainRune1.size(), aspectRatioMode=True))
+        self.MainRune1.resize(pixmapPrimaryRune1.width(), pixmapPrimaryRune1.height())
+
+        
+        pixmapPrimaryRune2 = QPixmap(f'Runes\{rune1}\{runes[1]}.png')
+        self.MainRune2.setPixmap(pixmapPrimaryRune2)
+        self.MainRune2.setPixmap(pixmapPrimaryRune2.scaled(self.MainRune2.size(), aspectRatioMode=True))
+        self.MainRune2.resize(pixmapPrimaryRune2.width(), pixmapPrimaryRune2.height())
+
+        
+        pixmapPrimaryRune3 = QPixmap(f'Runes\{rune1}\{runes[2]}.png')
+        self.MainRune3.setPixmap(pixmapPrimaryRune3)
+        self.MainRune3.setPixmap(pixmapPrimaryRune3.scaled(self.MainRune3.size(), aspectRatioMode=True))
+        self.MainRune3.resize(pixmapPrimaryRune3.width(), pixmapPrimaryRune3.height())
+
+
+        pixmapSecondaryRune1 = QPixmap(f'Runes\{rune2}\{runes[3]}.png')
+        self.SecondaryRune1.setPixmap(pixmapSecondaryRune1)
+        self.SecondaryRune1.setPixmap(pixmapSecondaryRune1.scaled(self.SecondaryRune1.size(), aspectRatioMode=True))
+        self.SecondaryRune1.resize(pixmapSecondaryRune1.width(), pixmapSecondaryRune1.height())
+
+        pixmapSecondaryRune2 = QPixmap(f'Runes\{rune2}\{runes[4]}.png')
+        self.SecondaryRune2.setPixmap(pixmapSecondaryRune2)
+        self.SecondaryRune2.setPixmap(pixmapSecondaryRune2.scaled(self.SecondaryRune2.size(), aspectRatioMode=True))
+        self.SecondaryRune2.resize(pixmapSecondaryRune2.width(), pixmapSecondaryRune2.height())
+
+        shards = rates['Shards']
+        pixmapShard1 = QPixmap(f'Runes\{shards[0]}.png')
+        self.minorRune1.setPixmap(pixmapShard1)
+        self.minorRune1.setPixmap(pixmapShard1.scaled(self.minorRune1.size(), aspectRatioMode=True))
+        self.minorRune1.resize(pixmapShard1.width(), pixmapShard1.height())
+
+
+        pixmapShard2 = QPixmap(f'Runes\{shards[1]}.png')
+        self.minorRune2.setPixmap(pixmapShard2)
+        self.minorRune2.setPixmap(pixmapShard2.scaled(self.minorRune2.size(), aspectRatioMode=True))
+        self.minorRune2.resize(pixmapShard2.width(), pixmapShard2.height())
+
+        pixmapShard3 = QPixmap(f'Runes\{shards[2]}.png')
+        self.minorRune3.setPixmap(pixmapShard3)
+        self.minorRune3.setPixmap(pixmapShard3.scaled(self.minorRune3.size(), aspectRatioMode=True))
+        self.minorRune3.resize(pixmapShard3.width(), pixmapShard3.height())
 
         print(f"Elapsed time: {elapsed_time} seconds\n")
 

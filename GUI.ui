@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1149</width>
+    <width>988</width>
     <height>695</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1149</width>
+    <height>695</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -225,23 +231,32 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="MainRune">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>590</x>
       <y>10</y>
-      <width>101</width>
-      <height>91</height>
+      <width>151</width>
+      <height>141</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>141</height>
+     </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>101</width>
-      <height>91</height>
+      <width>151</width>
+      <height>141</height>
      </size>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>MainRune</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Runes/Precision/PrecisionRunes.qrc">:/Runes/Conqueror.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -250,71 +265,113 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="MainRune1">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>120</y>
-      <width>61</width>
-      <height>51</height>
+      <x>730</x>
+      <y>40</y>
+      <width>64</width>
+      <height>64</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>MainRune1</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Runes/CoupDeGrace.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="MainRune2">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>180</y>
-      <width>61</width>
-      <height>51</height>
+      <x>810</x>
+      <y>40</y>
+      <width>64</width>
+      <height>64</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>MainRune2</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Runes/CutDown.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="MainRune3">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>240</y>
-      <width>61</width>
-      <height>51</height>
+      <x>890</x>
+      <y>40</y>
+      <width>64</width>
+      <height>64</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>MainRune3</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Runes/PresenceOfMind.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="SecondaryRune">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>20</y>
-      <width>81</width>
-      <height>71</height>
+      <x>720</x>
+      <y>140</y>
+      <width>31</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>81</width>
-      <height>71</height>
+      <width>51</width>
+      <height>51</height>
      </size>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>SecondaryRune</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/rano/Runes/Sorcery.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -323,97 +380,162 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="SecondaryRune1">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>770</x>
       <y>120</y>
-      <width>61</width>
-      <height>51</height>
+      <width>64</width>
+      <height>64</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>SecondaryRune1</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Runes/Overheal.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="SecondaryRune2">
     <property name="geometry">
      <rect>
-      <x>950</x>
-      <y>180</y>
-      <width>61</width>
-      <height>51</height>
+      <x>840</x>
+      <y>120</y>
+      <width>64</width>
+      <height>64</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
     </property>
-    <property name="text">
-     <string>SecondaryRune2</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="SecondaryRune3">
-    <property name="geometry">
-     <rect>
-      <x>950</x>
-      <y>240</y>
-      <width>61</width>
-      <height>51</height>
-     </rect>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>SecondaryRune3</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Runes/LegendAlacrity.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="minorRune3">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>230</y>
-      <width>41</width>
-      <height>31</height>
+      <x>850</x>
+      <y>200</y>
+      <width>32</width>
+      <height>32</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>32</horstretch>
+      <verstretch>32</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/rano/Runes/The Move Speed Shard.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="minorRune2">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>190</y>
-      <width>41</width>
-      <height>31</height>
+      <x>810</x>
+      <y>200</y>
+      <width>32</width>
+      <height>32</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/rano/Runes/The Health Scaling Shard.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="minorRune1">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>150</y>
-      <width>41</width>
-      <height>31</height>
+      <x>770</x>
+      <y>200</y>
+      <width>32</width>
+      <height>32</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/rano/Runes/The Attack Speed Shard.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -422,7 +544,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1149</width>
+     <width>988</width>
      <height>21</height>
     </rect>
    </property>
@@ -431,6 +553,13 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="Images/test.qrc"/>
+  <include location="Random.qrc"/>
+  <include location="Runes/randommm.qrc"/>
+  <include location="Runes/Precision/PrecisionRunes.qrc"/>
+  <include location="Runes/Inspiration/InspirationRunes.qrc"/>
+  <include location="Runes/Domination/Domination Runes.qrc"/>
+  <include location="Runes/Resolve/Resolve Runes.qrc"/>
+  <include location="Runes/Sorcery/SorceryRunes.qrc"/>
   <include location="SummonerSpells/Summoner1.qrc"/>
   <include location="SummonerSpells/Summoner2.qrc"/>
   <include location="Roles/roles.qrc"/>
