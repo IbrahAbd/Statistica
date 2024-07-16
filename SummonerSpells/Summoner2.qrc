@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Summoner2Image">
+    <file>Exhaust.png</file>
+  </qresource>
+</RCC>

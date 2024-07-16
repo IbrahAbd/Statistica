@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1148</width>
+    <width>1149</width>
     <height>695</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>430</y>
+      <x>10</x>
+      <y>520</y>
       <width>771</width>
       <height>61</height>
      </rect>
@@ -28,8 +28,8 @@
    <widget class="QWidget" name="gridLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>340</y>
+      <x>10</x>
+      <y>430</y>
       <width>771</width>
       <height>61</height>
      </rect>
@@ -39,8 +39,8 @@
    <widget class="QWidget" name="gridLayoutWidget_5">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>250</y>
+      <x>10</x>
+      <y>350</y>
       <width>771</width>
       <height>61</height>
      </rect>
@@ -48,6 +48,9 @@
     <layout class="QGridLayout" name="gridLayout_5"/>
    </widget>
    <widget class="QLabel" name="label">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -56,8 +59,14 @@
       <height>151</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Aatrox.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="name">
@@ -65,7 +74,7 @@
      <rect>
       <x>180</x>
       <y>10</y>
-      <width>421</width>
+      <width>231</width>
       <height>71</height>
      </rect>
     </property>
@@ -80,9 +89,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="WinRate">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>80</y>
-      <width>401</width>
+      <width>231</width>
       <height>31</height>
      </rect>
     </property>
@@ -93,9 +102,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="BanRate">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>110</y>
-      <width>391</width>
+      <width>251</width>
       <height>31</height>
      </rect>
     </property>
@@ -106,9 +115,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="PickRate">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>140</y>
-      <width>391</width>
+      <width>251</width>
       <height>31</height>
      </rect>
     </property>
@@ -119,27 +128,292 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="role">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>180</y>
-      <width>91</width>
-      <height>31</height>
+      <x>65</x>
+      <y>170</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Role</string>
     </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="roleIMG">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>130</y>
+      <x>20</x>
+      <y>170</y>
       <width>41</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>41</width>
+      <height>41</height>
+     </size>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/role/top.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Roles/roles.qrc">:/role/top.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Summoner1">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>210</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>61</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Summoner2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>210</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>61</width>
+      <height>61</height>
+     </size>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MainRune">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>10</y>
+      <width>101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>101</width>
+      <height>91</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>MainRune</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MainRune1">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>120</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>MainRune1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MainRune2">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>180</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>MainRune2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MainRune3">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>240</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>MainRune3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="SecondaryRune">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>20</y>
+      <width>81</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>81</width>
+      <height>71</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>SecondaryRune</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="SecondaryRune1">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>120</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>SecondaryRune1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="SecondaryRune2">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>180</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>SecondaryRune2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="SecondaryRune3">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>240</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>SecondaryRune3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="minorRune3">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>230</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="minorRune2">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>190</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="minorRune1">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>150</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
@@ -148,7 +422,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1148</width>
+     <width>1149</width>
      <height>21</height>
     </rect>
    </property>
@@ -157,6 +431,8 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="Images/test.qrc"/>
+  <include location="SummonerSpells/Summoner1.qrc"/>
+  <include location="SummonerSpells/Summoner2.qrc"/>
   <include location="Roles/roles.qrc"/>
  </resources>
  <connections/>
