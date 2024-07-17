@@ -2,36 +2,15 @@ from bs4 import BeautifulSoup
 import requests
 
 SummonerSpellSRCs = [
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerFlash.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerSmite.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerBarrier.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerHaste.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerHeal.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerDot.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerTeleport.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/spell/SummonerExhaust.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerFlash.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerSmite.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerBarrier.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerHaste.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerHeal.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerDot.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerTeleport.webp",
+    "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerExhaust.webp",
 
-]
-MainRuneSRCs = [
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Resolve/VeteranAftershock/VeteranAftershock.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Resolve/Guardian/Guardian.webp",
-
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Domination/Electrocute/Electrocute.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Domination/DarkHarvest/DarkHarvest.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Domination/HailOfBlades/HailOfBlades.webp",
-
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Sorcery/SummonAery/SummonAery.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Sorcery/PhaseRush/PhaseRush.webp",
-
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Precision/Conqueror/Conqueror.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Precision/FleetFootwork/FleetFootwork.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Precision/PressTheAttack/PressTheAttack.webp",
-
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Inspiration/GlacialAugment/GlacialAugment.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Inspiration/UnsealedSpellbook/UnsealedSpellbook.webp",
-    "https://static.bigbrain.gg/assets/lol/riot_static/14.13.1/img/small-perk-images/Styles/Inspiration/FirstStrike/FirstStrike.webp",
 ]
 
 RuneTypes = ["Domination","Sorcery","Inspiration","Precision","Resolve"]
@@ -60,7 +39,6 @@ def parse_rates(html):
         ban_rate = soup.find('div', class_='ban-rate').get_text().strip()
         role = soup.find('span', class_='champion-title').get_text().strip().split()
         mainRune = soup.find('div', class_='perk-style-title').get_text().strip()
-        secondaryRune = soup.find('div', class_='perk-style-title').get_text().strip()
 
         combo['win_rate'] = extract_value(win_rate) + '%'
         combo['pick_rate'] = extract_value(pick_rate) + '%'
@@ -90,7 +68,6 @@ def parse_rates(html):
 
 
         combo['MinorRunes'] = perk_names
-        print(perk_names)
 
         shard_names = []
         shardRuneHTML = soup.find_all('div',class_="shard shard-active")
@@ -110,8 +87,6 @@ def parse_rates(html):
                         count += 1
                     elif count == 1:
                         combo['SumSpell2'] = alt_text.split()[-1:]
-
-
         img = soup.find_all('img', {'src': src})
         return combo
     
