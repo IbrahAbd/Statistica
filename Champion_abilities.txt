@@ -178,6 +178,24 @@ Description: Ashe fires a missile of ice in a straight line. If the arrow collid
 Passive: Frost Shot
 Description: Ashe's attacks slow their target, causing her to deal increased damage to these targets.Ashe's critical strikes deal no bonus damage but apply an empowered slow to the target.
 
+Champion: Aurora (the Witch Between Worlds)
+--- From the moment she was born, Aurora navigated life with a unique ability to move between the spirit and material realms. Determined to learn more about the spirit realm's inhabitants, she left her home to further her research and happened upon a...
+
+Ability: Twofold Hex
+Description: Aurora sends out a missile that curses any enemies it hits. She can then recast the ability to draw active curses back toward herself, damaging foes who are hit along the way.
+
+Ability: Across the Veil
+Description: Aurora leaps in a direction of her choosing, entering the spirit realm upon landing and becoming invisible for a short duration of time.
+
+Ability: The Weirding
+Description: Aurora converges the realms, sending out a blast of spirit magic that damages and slows enemies before Aurora hops backward to safety.
+
+Ability: Between Worlds
+Description: Aurora leaps in a direction of her choosing, releasing a shockwave that damages and slows any enemies it hits. Afterward, she creates an area that traps enemies within it and allows Aurora to teleport from one side of the area to the other.
+
+Passive: Spirit Abjuration
+Description: Aurora's spells and attacks exorcise spirits from the enemies she damages. Exorcised spirits follow Aurora around, healing her and granting her bonus movement speed.
+
 Champion: Aurelion Sol (The Star Forger)
 --- Aurelion Sol once graced the vast emptiness of the cosmos with celestial wonders of his own devising. Now, he is forced to wield his awesome power at the behest of a space-faring empire that tricked him into servitude. Desiring a return to his...
 
@@ -1168,7 +1186,7 @@ Description: Kled and Skaarl charge to a location, leaving a speed-granting trai
 Passive: Skaarl, the Cowardly Lizard
 Description: Kled rides his trusty steed, Skaarl, who takes damage for him. When Skaarl's health depletes, Kled dismounts.While dismounted, Kled's abilities change and he deals less damage to champions. Kled can restore Skaarl's courage by fighting enemies. At maximum courage, Kled remounts with a portion of Skaarl's health.
 
-Champion: Kog'Maw (the Mouth of the Abyss)
+Champion: Kogmaw (the Mouth of the Abyss)
 --- Belched forth from a rotting Void incursion deep in the wastelands of Icathia, Kog'Maw is an inquisitive yet putrid creature with a caustic, gaping mouth. This particular Void-spawn needs to gnaw and drool on anything within reach to truly understand it...
 
 Q Ability: Caustic Spittle
@@ -2608,7 +2626,7 @@ Description: Blasts target enemy champion, dealing a large amount of magic damag
 Passive: Phenomenal Evil Power
 Description: Veigar is the greatest Evil to ever strike at the hearts of Runeterra - and he's only getting bigger! Striking an enemy Champion with a spell or scoring a takedown grants Veigar permanently increased Ability Power.
 
-Champion: Vel'Koz (the Eye of the Void)
+Champion: Velkoz (the Eye of the Void)
 --- It is unclear if Vel'Koz was the first Void-spawn to emerge on Runeterra, but there has certainly never been another to match his level of cruel, calculating sentience. While his kin devour or defile everything around them, he seeks instead to...
 
 Q Ability: Plasma Fission

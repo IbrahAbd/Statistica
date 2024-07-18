@@ -4,9 +4,6 @@ from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
 
-#TODO: Get hover text working for runes
-#TODO: Change backround colour
-#TODO: Add champion abilities and passive with hovering working.
 
 filePath = 'RuneDescriptions.txt'
 champFilePath = 'Champion_abilities.txt'
@@ -50,7 +47,7 @@ def extractChampionInfo(input_text, champion_name, ability_label):
             capture_description = True
 
     if ability_description:
-        return '\n'.join(ability_description)  # Join description lines
+        return '\n'.join(ability_description)  
     else:
         return f"No {ability_label} Ability description found for {champion_name}."
     
@@ -99,7 +96,8 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi('GUI.ui', self) 
 
-        champ = "Jinx" 
+        champ = "Jhin" 
+        counter = counters(champ)
 
         start_time = time.time()
         rates = output(champ)
@@ -232,31 +230,215 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Q.setPixmap(pixmapQ)
         self.Q.setPixmap(pixmapQ.scaled(self.Q.size(), aspectRatioMode=True))
         self.Q.resize(pixmapQ.width(), pixmapQ.height())
-        self.Q.setToolTip((abilityNames[0] + "\n" + abilityDescription[0]).replace(".",".\n"))
+        self.Q.setToolTip((abilityNames[0] + "\n" + abilityDescription[0]).replace(". ",".").replace(".",".\n"))
         
         pixmapW = QPixmap(f'Abilities\{champ}W.png')
         self.W.setPixmap(pixmapW)
         self.W.setPixmap(pixmapW.scaled(self.W.size(), aspectRatioMode=True))
         self.W.resize(pixmapW.width(), pixmapW.height())
-        self.W.setToolTip((abilityNames[1] + "\n" + abilityDescription[1]).replace(".",".\n"))
+        self.W.setToolTip((abilityNames[1] + "\n" + abilityDescription[1]).replace(". ",".").replace(".",".\n"))
 
         pixmapE = QPixmap(f'Abilities\{champ}E.png')
         self.E.setPixmap(pixmapE)
         self.E.setPixmap(pixmapE.scaled(self.E.size(), aspectRatioMode=True))
         self.E.resize(pixmapE.width(), pixmapE.height())
-        self.E.setToolTip((abilityNames[2] + "\n" + abilityDescription[2]).replace(".",".\n"))
+        self.E.setToolTip((abilityNames[2] + "\n" + abilityDescription[2]).replace(". ",".").replace(".",".\n"))
 
         pixmapR = QPixmap(f'Abilities\{champ}R.png')
         self.R.setPixmap(pixmapR)
         self.R.setPixmap(pixmapR.scaled(self.R.size(), aspectRatioMode=True))
         self.R.resize(pixmapR.width(), pixmapR.height())
-        self.R.setToolTip((abilityNames[3] + "\n" + abilityDescription[3]).replace(".",".\n"))
+        self.R.setToolTip((abilityNames[3] + "\n" + abilityDescription[3]).replace(". ",".").replace(".",".\n"))
 
         pixmapP = QPixmap(f'passive\{champ}_P.png')
         self.P.setPixmap(pixmapP)
         self.P.setPixmap(pixmapP.scaled(self.P.size(), aspectRatioMode=True))
         self.P.resize(pixmapP.width(), pixmapP.height())
-        self.P.setToolTip((abilityNames[4] + "\n" + abilityDescription[4]).replace(".",".\n"))
+        self.P.setToolTip((abilityNames[4] + "\n" + abilityDescription[4]).replace(". ",".").replace(".",".\n"))
+
+
+        name0 = counter['champ0']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate0 = str(round(float(counter['champ0']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap0 = QPixmap(f'Images\{name0}.png')
+        self.BestPicked1.setPixmap(pixmap0)
+        self.BestPicked1.setPixmap(pixmap0.scaled(self.BestPicked1.size(), aspectRatioMode=True))
+        self.BestPicked1.resize(pixmap0.width(), pixmap0.height())
+        self.BestPickedWR0.setText(winRate0)
+        self.BestPickedWR0.setFont(font)
+        self.BestPickedWR0.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name1 = counter['champ1']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate1 = str(round(float(counter['champ1']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap1 = QPixmap(f'Images\{name1}.png')
+        self.BestPicked2.setPixmap(pixmap1)
+        self.BestPicked2.setPixmap(pixmap1.scaled(self.BestPicked2.size(), aspectRatioMode=True))
+        self.BestPicked2.resize(pixmap1.width(), pixmap1.height())
+        self.BestPickedWR1.setText(winRate1)
+        self.BestPickedWR1.setFont(font)
+        self.BestPickedWR1.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name2 = counter['champ2']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate2 = str(round(float(counter['champ2']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap2 = QPixmap(f'Images\{name2}.png')
+        self.BestPicked3.setPixmap(pixmap2)
+        self.BestPicked3.setPixmap(pixmap2.scaled(self.BestPicked3.size(), aspectRatioMode=True))
+        self.BestPicked3.resize(pixmap2.width(), pixmap2.height())
+        self.BestPickedWR2.setText(winRate2)
+        self.BestPickedWR2.setFont(font)
+        self.BestPickedWR2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name3 = counter['champ3']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate3 = str(round(float(counter['champ3']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap3 = QPixmap(f'Images\{name3}.png')
+        self.BestPicked4.setPixmap(pixmap3)
+        self.BestPicked4.setPixmap(pixmap3.scaled(self.BestPicked4.size(), aspectRatioMode=True))
+        self.BestPicked4.resize(pixmap3.width(), pixmap3.height())
+        self.BestPickedWR3.setText(winRate3)
+        self.BestPickedWR3.setFont(font)
+        self.BestPickedWR3.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name4 = counter['champ4']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate4 = str(round(float(counter['champ4']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap4 = QPixmap(f'Images\{name4}.png')
+        self.BestPicked5.setPixmap(pixmap4)
+        self.BestPicked5.setPixmap(pixmap4.scaled(self.BestPicked5.size(), aspectRatioMode=True))
+        self.BestPicked5.resize(pixmap4.width(), pixmap4.height())
+        self.BestPickedWR4.setText(winRate4)
+        self.BestPickedWR4.setFont(font)
+        self.BestPickedWR4.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name5 = counter['champ5']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate5 = str(round(float(counter['champ5']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap5 = QPixmap(f'Images\{name5}.png')
+        self.BestPicked6.setPixmap(pixmap5)
+        self.BestPicked6.setPixmap(pixmap5.scaled(self.BestPicked6.size(), aspectRatioMode=True))
+        self.BestPicked6.resize(pixmap5.width(), pixmap5.height())
+        self.BestPickedWR5.setText(winRate5)
+        self.BestPickedWR5.setFont(font)
+        self.BestPickedWR5.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name6 = counter['champ6']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate6 = str(round(float(counter['champ6']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap6 = QPixmap(f'Images\{name6}.png')
+        self.BestPicked7.setPixmap(pixmap6)
+        self.BestPicked7.setPixmap(pixmap6.scaled(self.BestPicked7.size(), aspectRatioMode=True))
+        self.BestPicked7.resize(pixmap6.width(), pixmap6.height())
+        self.BestPickedWR6.setText(winRate6)
+        self.BestPickedWR6.setFont(font)
+        self.BestPickedWR6.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name7 = counter['champ7']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate7 = str(round(float(counter['champ7']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap7 = QPixmap(f'Images\{name7}.png')
+        self.BestPicked8.setPixmap(pixmap7)
+        self.BestPicked8.setPixmap(pixmap7.scaled(self.BestPicked8.size(), aspectRatioMode=True))
+        self.BestPicked8.resize(pixmap7.width(), pixmap7.height())
+        self.BestPickedWR7.setText(winRate7)
+        self.BestPickedWR7.setFont(font)
+        self.BestPickedWR7.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        name8 = counter['champ8']['name'].replace("'","").replace(" ","").replace(".","")
+        winRate8 = str(round(float(counter['champ8']["win_rate"].replace("% WR","")),1)) + "%"
+        pixmap8 = QPixmap(f'Images\{name8}.png')
+        self.BestPicked9.setPixmap(pixmap8)
+        self.BestPicked9.setPixmap(pixmap8.scaled(self.BestPicked9.size(), aspectRatioMode=True))
+        self.BestPicked9.resize(pixmap8.width(), pixmap8.height())
+        self.BestPickedWR8.setText(winRate8)
+        self.BestPickedWR8.setFont(font)
+        self.BestPickedWR8.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+
+        CounterName0 = counter['champ10']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate0 = str(round(float(counter['champ10']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap0 = QPixmap(f'Images\{CounterName0}.png')
+        self.BestPicked1_2.setPixmap(CounterPixmap0)
+        self.BestPicked1_2.setPixmap(CounterPixmap0.scaled(self.BestPicked1_2.size(), aspectRatioMode=True))
+        self.BestPicked1_2.resize(CounterPixmap0.width(), CounterPixmap0.height())
+        self.BestPickedWR0_2.setText(CounterWinRate0)
+        self.BestPickedWR0_2.setFont(font)
+        self.BestPickedWR0_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+
+        CounterName1 = counter['champ11']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate1 = str(round(float(counter['champ11']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap1 = QPixmap(f'Images\{CounterName1}.png')
+        self.BestPicked2_2.setPixmap(CounterPixmap1)
+        self.BestPicked2_2.setPixmap(CounterPixmap1.scaled(self.BestPicked2_2.size(), aspectRatioMode=True))
+        self.BestPicked2_2.resize(CounterPixmap1.width(), CounterPixmap1.height())
+        self.BestPickedWR1_2.setText(CounterWinRate1)
+        self.BestPickedWR1_2.setFont(font)
+        self.BestPickedWR1_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName2 = counter['champ12']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate2 = str(round(float(counter['champ12']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap2 = QPixmap(f'Images\{CounterName2}.png')
+        self.BestPicked3_2.setPixmap(CounterPixmap2)
+        self.BestPicked3_2.setPixmap(CounterPixmap2.scaled(self.BestPicked3_2.size(), aspectRatioMode=True))
+        self.BestPicked3_2.resize(CounterPixmap2.width(), CounterPixmap2.height())
+        self.BestPickedWR2_2.setText(CounterWinRate2)
+        self.BestPickedWR2_2.setFont(font)
+        self.BestPickedWR2_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName3 = counter['champ13']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate3 = str(round(float(counter['champ13']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap3 = QPixmap(f'Images\{CounterName3}.png')
+        self.BestPicked4_2.setPixmap(CounterPixmap3)
+        self.BestPicked4_2.setPixmap(CounterPixmap3.scaled(self.BestPicked3_2.size(), aspectRatioMode=True))
+        self.BestPicked4_2.resize(CounterPixmap3.width(), CounterPixmap3.height())
+        self.BestPickedWR3_2.setText(CounterWinRate3)
+        self.BestPickedWR3_2.setFont(font)
+        self.BestPickedWR3_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName4 = counter['champ14']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate4 = str(round(float(counter['champ14']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap4 = QPixmap(f'Images\{CounterName4}.png')
+        self.BestPicked5_2.setPixmap(CounterPixmap4)
+        self.BestPicked5_2.setPixmap(CounterPixmap4.scaled(self.BestPicked4_2.size(), aspectRatioMode=True))
+        self.BestPicked5_2.resize(CounterPixmap4.width(), CounterPixmap4.height())
+        self.BestPickedWR4_2.setText(CounterWinRate4)
+        self.BestPickedWR4_2.setFont(font)
+        self.BestPickedWR4_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName5 = counter['champ15']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate5 = str(round(float(counter['champ15']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap5 = QPixmap(f'Images\{CounterName5}.png')
+        self.BestPicked6_2.setPixmap(CounterPixmap5)
+        self.BestPicked6_2.setPixmap(CounterPixmap5.scaled(self.BestPicked5_2.size(), aspectRatioMode=True))
+        self.BestPicked6_2.resize(CounterPixmap5.width(), CounterPixmap5.height())
+        self.BestPickedWR5_2.setText(CounterWinRate5)
+        self.BestPickedWR5_2.setFont(font)
+        self.BestPickedWR5_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName6 = counter['champ16']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate6 = str(round(float(counter['champ16']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap6 = QPixmap(f'Images\{CounterName6}.png')
+        self.BestPicked7_2.setPixmap(CounterPixmap6)
+        self.BestPicked7_2.setPixmap(CounterPixmap6.scaled(self.BestPicked6_2.size(), aspectRatioMode=True))
+        self.BestPicked7_2.resize(CounterPixmap6.width(), CounterPixmap6.height())
+        self.BestPickedWR6_2.setText(CounterWinRate6)
+        self.BestPickedWR6_2.setFont(font)
+        self.BestPickedWR6_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName7 = counter['champ17']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate7 = str(round(float(counter['champ17']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap7 = QPixmap(f'Images\{CounterName7}.png')
+        self.BestPicked8_2.setPixmap(CounterPixmap7)
+        self.BestPicked8_2.setPixmap(CounterPixmap7.scaled(self.BestPicked7_2.size(), aspectRatioMode=True))
+        self.BestPicked8_2.resize(CounterPixmap7.width(), CounterPixmap7.height())
+        self.BestPickedWR7_2.setText(CounterWinRate7)
+        self.BestPickedWR7_2.setFont(font)
+        self.BestPickedWR7_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+        CounterName8 = counter['champ18']['name'].replace("'","").replace(" ","").replace(".","")
+        CounterWinRate8 = str(round(float(counter['champ18']["lose_rate"].replace("% WR","")),1)) + "%"
+        CounterPixmap8 = QPixmap(f'Images\{CounterName8}.png')
+        self.BestPicked9_2.setPixmap(CounterPixmap8)
+        self.BestPicked9_2.setPixmap(CounterPixmap8.scaled(self.BestPicked8_2.size(), aspectRatioMode=True))
+        self.BestPicked9_2.resize(CounterPixmap8.width(), CounterPixmap8.height())
+        self.BestPickedWR8_2.setText(CounterWinRate8)
+        self.BestPickedWR8_2.setFont(font)
+        self.BestPickedWR8_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
 
 
         print(f"Elapsed time: {elapsed_time} seconds\n")

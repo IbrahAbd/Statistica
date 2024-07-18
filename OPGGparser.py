@@ -10,7 +10,6 @@ SummonerSpellSRCs = [
     "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerDot.webp",
     "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerTeleport.webp",
     "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerExhaust.webp",
-
 ]
 
 RuneTypes = ["Domination","Sorcery","Inspiration","Precision","Resolve"]
@@ -106,3 +105,42 @@ def output(champ):
             print("Could not find rates on the page.")
     else:
         print("Failed to retrieve the page.")
+
+def counters(champ):
+    url = f'https://u.gg/lol/champions/{champ}/counter?rank=overall'
+    html = get_page_html(url)
+    counters = {}
+
+    if html:
+        soup = BeautifulSoup(html, "lxml")
+        i = 0
+        outer_divs = soup.find_all('div', class_='col-2')
+        if outer_divs:
+            for champion in outer_divs:
+                inner_div1 = champion.find('div', class_='champion-name')
+                if inner_div1:
+                    name = inner_div1.get_text().strip()
+                    counters[f"champ{i}"] = {"name": name}
+                    i += 1
+
+        j = 0
+        outer_div2 = soup.find_all('div', class_='col-3')
+        if outer_div2:
+            for div in outer_div2:
+                winRate = div.find('div', class_='win-rate').get_text().strip()
+                if winRate:
+                    if j > 9:
+                        counters[f"champ{j}"]["lose_rate"] = winRate
+                    else:
+                        counters[f"champ{j}"]["win_rate"] = winRate
+                    j += 1
+
+        if counters:
+            return counters
+        else:
+            print("Could not find rates on the page.")
+    else:
+        print("Failed to retrieve the page.")
+
+
+#TODO do async for both searches at once.
