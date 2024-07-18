@@ -1132,7 +1132,7 @@ Description: Kennen summons a storm that strikes at nearby enemy champions for m
 Passive: Mark of the Storm
 Description: Kennen stuns enemies he hits 3 times with his abilities.
 
-Champion: Kha'Zix (the Voidreaver)
+Champion: Khazix (the Voidreaver)
 --- The Void grows, and the Void adapts—in none of its myriad spawn are these truths more apparent than Kha'Zix. Evolution drives the core of this mutating horror, born to survive and to slay the strong. Where it struggles to do so, it grows new, more...
 
 Q Ability: Taste Their Fear
@@ -1672,7 +1672,7 @@ Description: Nocturne reduces the sight radius of all enemy champions and remove
 Passive: Umbra Blades
 Description: Every few seconds, Nocturne's next attack strikes surrounding enemies for bonus physical damage and heals himself. Nocturne's basic attacks reduce this cooldown.
 
-Champion: Nunu & Willump (the Boy and His Yeti)
+Champion: Nunu&Willump (the Boy and His Yeti)
 --- Once upon a time, there was a boy who wanted to prove he was a hero by slaying a fearsome monster—only to discover that the beast, a lonely and magical yeti, merely needed a friend. Bound together by ancient power and a shared love of snowballs, Nunu...
 
 Q Ability: Consume

@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import asyncio
+import aiohttp
 
 SummonerSpellSRCs = [
     "https://static.bigbrain.gg/assets/lol/riot_static/14.14.1/img/spell/SummonerFlash.webp",
@@ -13,22 +15,19 @@ SummonerSpellSRCs = [
 ]
 
 RuneTypes = ["Domination","Sorcery","Inspiration","Precision","Resolve"]
-
-def get_page_html(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.text
-    else:
-        return None
+async def get_page_html(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status == 200:
+                return await response.text()
+            else:
+                return None
 
 
 def extract_value(text):
     return text.split('%')[0] if '%' in text else text
 
-def parse_rates(html):
+async def parse_rates(html):
     soup = BeautifulSoup(html, "lxml")
     combo = {}
 
@@ -93,12 +92,12 @@ def parse_rates(html):
         print(f"Error parsing rates: {e}")
         return None
 
-def output(champ):
+async def output(champ):
     url = f'https://u.gg/lol/champions/{champ}/build?rank=overall'
-    html = get_page_html(url)
+    html = await get_page_html(url)
     
     if html:
-        rates = parse_rates(html)
+        rates = await parse_rates(html)
         if rates:
             return rates
         else:
@@ -106,9 +105,9 @@ def output(champ):
     else:
         print("Failed to retrieve the page.")
 
-def counters(champ):
+async def counters(champ):
     url = f'https://u.gg/lol/champions/{champ}/counter?rank=overall'
-    html = get_page_html(url)
+    html = await get_page_html(url)
     counters = {}
 
     if html:
@@ -142,5 +141,3 @@ def counters(champ):
     else:
         print("Failed to retrieve the page.")
 
-
-#TODO do async for both searches at once.

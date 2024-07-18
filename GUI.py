@@ -3,7 +3,8 @@ import time
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
-
+import asyncio
+import aiohttp
 
 filePath = 'RuneDescriptions.txt'
 champFilePath = 'Champion_abilities.txt'
@@ -93,16 +94,24 @@ def extractAbilityDescriptionFromFile(input_file, champion_name):
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
+        start_time = time.time()
         super().__init__()
         uic.loadUi('GUI.ui', self) 
 
-        champ = "Jhin" 
-        counter = counters(champ)
+        champ = "Khazix" 
+        rates = {} 
+        counter = {} 
 
-        start_time = time.time()
-        rates = output(champ)
-        end_time = time.time()
-        elapsed_time = end_time - start_time
+        async def concurrentRun(champion):
+            output_task = asyncio.create_task(output(champion))
+            counters_task = asyncio.create_task(counters(champion))
+    
+            rates = await output_task
+            counter = await counters_task
+
+            return rates, counter
+        
+        rates, counter = asyncio.run(concurrentRun(champ))
 
         role = rates['role']
         font = QtGui.QFont()
@@ -440,6 +449,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.BestPickedWR8_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
 
 
+        end_time = time.time()
+        elapsed_time = end_time - start_time
 
         print(f"Elapsed time: {elapsed_time} seconds\n")
 
