@@ -1,7 +1,11 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QScrollArea
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QMainWindow
+from loadingScreen import MainWindow3
+from GUI import MainWindow2
+import time
+
+from PyQt5.QtCore import QTimer
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -48,14 +52,39 @@ class MainWindow(QMainWindow):
             button_name = f"pushButton_{i}"
             button = getattr(self, button_name)
             button.setStyleSheet(f"background-image: url('Images/{champ}.png');")
-            button.setText("")  # Clear the text if needed
+            button.setText("")
 
         completer = QtWidgets.QCompleter(champions+championsLower)
         
+
         # Set QCompleter object to QLineEdit
         self.lineEdit.setCompleter(completer)
         self.lineEdit.returnPressed.connect(self.on_return_pressed)
 
+
+    def on_return_pressed(self):
+        
+
+        champ = self.lineEdit.text()  # Get the champion name from the input field
+        self.lineEdit.clear()  # Clear the input field
+
+        self.hide()
+        # Show the loading screen
+        self.loading_screen = MainWindow3("gifs")
+        self.loading_screen.show()
+
+        self.gui = MainWindow2(champ)
+        self.gui.thread.scraping_done.connect(self.on_scraping_done)
+
+    def on_scraping_done(self):
+
+        self.loading_screen.hide()
+        start_time = time.time()
+        self.gui.show()
+
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Elapsed time: {elapsed_time} seconds\n")
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

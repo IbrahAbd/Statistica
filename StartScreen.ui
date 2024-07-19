@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1393</width>
-    <height>797</height>
+    <width>1180</width>
+    <height>646</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,8 +48,8 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-2423</y>
-         <width>1356</width>
+         <y>0</y>
+         <width>1143</width>
          <height>3200</height>
         </rect>
        </property>
@@ -74,13 +74,25 @@
        <widget class="QWidget" name="gridLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>240</y>
-          <width>1202</width>
-          <height>2810</height>
+          <x>30</x>
+          <y>230</y>
+          <width>1086</width>
+          <height>2828</height>
          </rect>
         </property>
-        <layout class="QGridLayout" name="gridLayout">
+        <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0,0,0">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
          <item row="20" column="2">
           <widget class="QPushButton" name="pushButton_165">
            <property name="minimumSize">
@@ -3240,8 +3252,8 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>380</x>
-          <y>20</y>
+          <x>300</x>
+          <y>10</y>
           <width>621</width>
           <height>101</height>
          </rect>
@@ -3253,8 +3265,8 @@
        <widget class="QLineEdit" name="lineEdit">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>150</y>
+          <x>330</x>
+          <y>140</y>
           <width>571</width>
           <height>61</height>
          </rect>

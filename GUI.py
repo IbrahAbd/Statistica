@@ -3,8 +3,9 @@ import time
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import pyqtSignal, QThread
 import asyncio
-import aiohttp
+
 
 filePath = 'RuneDescriptions.txt'
 champFilePath = 'Champion_abilities.txt'
@@ -92,28 +93,52 @@ def extractAbilityDescriptionFromFile(input_file, champion_name):
         if i == 5:
             break
 
-class MainWindow(QtWidgets.QMainWindow):
-    def __init__(self):
-        start_time = time.time()
+class ScrapingThread(QThread):
+    scraping_done = pyqtSignal(dict, dict)
+
+    def __init__(self, champ):
+        super().__init__()
+        self.champ = champ
+
+    def run(self):
+        asyncio.run(self.scrape())
+
+    async def scrape(self):
+        rates, counter = await self.concurrentRun(self.champ)
+        self.scraping_done.emit(rates, counter)
+
+    async def concurrentRun(self,champion):
+        output_task = asyncio.create_task(output(champion))
+        counters_task = asyncio.create_task(counters(champion))
+    
+        rates = await output_task
+        counter = await counters_task
+        
+        return rates, counter
+    
+    
+class MainWindow2(QtWidgets.QMainWindow):
+    def __init__(self,champ):
+        self.champ = champ
+        self.rates = {}
+        self.counter = {}
         super().__init__()
         uic.loadUi('GUI.ui', self) 
+        self.initUI()
 
-        champ = "Khazix" 
-        rates = {} 
-        counter = {} 
+    def initUI(self):
+        self.thread = ScrapingThread(self.champ)
+        self.thread.scraping_done.connect(self.on_scraping_done)
+        self.thread.start()
 
-        async def concurrentRun(champion):
-            output_task = asyncio.create_task(output(champion))
-            counters_task = asyncio.create_task(counters(champion))
-    
-            rates = await output_task
-            counter = await counters_task
+    def on_scraping_done(self, rates, counter):
+        self.rates = rates
+        self.counter = counter
+        self.show_results()
 
-            return rates, counter
-        
-        rates, counter = asyncio.run(concurrentRun(champ))
-
-        role = rates['role']
+    def show_results(self):
+        # Ensure that this method handles the case where rates and counter might be None
+        role = self.rates.get('role')
         font = QtGui.QFont()
         font.setPointSize(40)  
         
@@ -122,19 +147,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.roleIMG.setPixmap(pixmap.scaled(self.roleIMG.size(), aspectRatioMode=True))
         self.roleIMG.resize(pixmap.width(), pixmap.height())
 
-        self.display_image(f'Images\{champ}.png')
+        self.display_image(f'Images\{self.champ}.png')
 
-        if (champ.find(" ") == False):
-            champName = champ.split(" ")
-            champ = champName[0] + " " + champName[1]
-            print(champ)
+        if (self.champ.find(" ") == False):
+            champName = self.champ.split(" ")
+            self.champ = champName[0] + " " + champName[1]
 
-        self.name.setText(champ)
+        self.name.setText(self.champ)
         self.name.setFont(font)
         self.name.setStyleSheet("color: white;")
 
-        sumSpell1 = rates['SumSpell1'][0]
-        sumSpell2 = rates['SumSpell2'][0]
+        sumSpell1 = self.rates.get('SumSpell1'[0])
+        sumSpell2 = self.rates.get('SumSpell2'[0])
 
         pixmapSpell1 = QPixmap(f'SummonerSpells\{sumSpell1}.png')
         self.Summoner1.setPixmap(pixmapSpell1)
@@ -149,15 +173,15 @@ class MainWindow(QtWidgets.QMainWindow):
         font2 = QtGui.QFont()
         font2.setPointSize(20)  
 
-        self.WinRate.setText("Win rate: " + rates['win_rate'])
+        self.WinRate.setText("Win rate: " + self.rates.get('win_rate'))
         self.WinRate.setFont(font2)
         self.WinRate.setStyleSheet("color: green;")
 
-        self.BanRate.setText("Ban rate: " + rates['ban_rate'])
+        self.BanRate.setText("Ban rate: " + self.rates.get('ban_rate'))
         self.BanRate.setFont(font2)
         self.BanRate.setStyleSheet("color: red;")
 
-        self.PickRate.setText("Pick rate: " + rates['pick_rate'])
+        self.PickRate.setText("Pick rate: " + self.rates.get('pick_rate'))
         self.PickRate.setFont(font2)
         self.PickRate.setStyleSheet("color: white;")
 
@@ -165,10 +189,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.role.setFont(font2)
         self.role.setStyleSheet("color: white;")
 
-        rune1 = rates['MainRuneName']
-        rune2 = rates['SecondaryRuneName']
-        primaryRune = rates['MainPrimaryRune'].replace(" ", "")
-        runes = rates['MinorRunes']
+        rune1 = self.rates.get('MainRuneName')
+        rune2 = self.rates.get('SecondaryRuneName')
+        primaryRune = self.rates.get('MainPrimaryRune').replace(" ", "")
+        runes = self.rates.get('MinorRunes')
 
         pixmapMainRune = QPixmap(f'Runes\{rune1}\{primaryRune}.png')
         self.MainRune.setPixmap(pixmapMainRune)
@@ -213,7 +237,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.SecondaryRune2.resize(pixmapSecondaryRune2.width(), pixmapSecondaryRune2.height())
         self.SecondaryRune2.setToolTip(getRuneDescription(filePath,runes[4]))
 
-        shards = rates['Shards']
+        shards = self.rates.get('Shards')
         pixmapShard1 = QPixmap(f'Runes\{shards[0]}.png')
         self.minorRune1.setPixmap(pixmapShard1)
         self.minorRune1.setPixmap(pixmapShard1.scaled(self.minorRune1.size(), aspectRatioMode=True))
@@ -233,226 +257,81 @@ class MainWindow(QtWidgets.QMainWindow):
         self.minorRune3.setToolTip(getRuneDescription(filePath,shards[2]))
 
 
-        extractAbilityDescriptionFromFile("Champion_abilities.txt", champ)
+        extractAbilityDescriptionFromFile("Champion_abilities.txt", self.champ)
 
-        pixmapQ = QPixmap(f'Abilities\{champ}Q.png')
+        pixmapQ = QPixmap(f'Abilities\{self.champ}Q.png')
         self.Q.setPixmap(pixmapQ)
         self.Q.setPixmap(pixmapQ.scaled(self.Q.size(), aspectRatioMode=True))
         self.Q.resize(pixmapQ.width(), pixmapQ.height())
         self.Q.setToolTip((abilityNames[0] + "\n" + abilityDescription[0]).replace(". ",".").replace(".",".\n"))
         
-        pixmapW = QPixmap(f'Abilities\{champ}W.png')
+        pixmapW = QPixmap(f'Abilities\{self.champ}W.png')
         self.W.setPixmap(pixmapW)
         self.W.setPixmap(pixmapW.scaled(self.W.size(), aspectRatioMode=True))
         self.W.resize(pixmapW.width(), pixmapW.height())
         self.W.setToolTip((abilityNames[1] + "\n" + abilityDescription[1]).replace(". ",".").replace(".",".\n"))
 
-        pixmapE = QPixmap(f'Abilities\{champ}E.png')
+        pixmapE = QPixmap(f'Abilities\{self.champ}E.png')
         self.E.setPixmap(pixmapE)
         self.E.setPixmap(pixmapE.scaled(self.E.size(), aspectRatioMode=True))
         self.E.resize(pixmapE.width(), pixmapE.height())
         self.E.setToolTip((abilityNames[2] + "\n" + abilityDescription[2]).replace(". ",".").replace(".",".\n"))
 
-        pixmapR = QPixmap(f'Abilities\{champ}R.png')
+        pixmapR = QPixmap(f'Abilities\{self.champ}R.png')
         self.R.setPixmap(pixmapR)
         self.R.setPixmap(pixmapR.scaled(self.R.size(), aspectRatioMode=True))
         self.R.resize(pixmapR.width(), pixmapR.height())
         self.R.setToolTip((abilityNames[3] + "\n" + abilityDescription[3]).replace(". ",".").replace(".",".\n"))
 
-        pixmapP = QPixmap(f'passive\{champ}_P.png')
+        pixmapP = QPixmap(f'passive\{self.champ}_P.png')
         self.P.setPixmap(pixmapP)
         self.P.setPixmap(pixmapP.scaled(self.P.size(), aspectRatioMode=True))
         self.P.resize(pixmapP.width(), pixmapP.height())
         self.P.setToolTip((abilityNames[4] + "\n" + abilityDescription[4]).replace(". ",".").replace(".",".\n"))
 
+        for i in range(0,9):
+            champ_data = self.counter.get(f'champ{i}', {})  # Default to empty dict if 'champ1' is not present
+            name = champ_data.get('name', '').replace("'", "").replace(" ", "").replace(".", "")
+            win_rate_raw = champ_data.get('win_rate', '')
+            winRate = ""
+            if win_rate_raw:
+                winRate = str(round(float(win_rate_raw.replace("% WR", "")), 1)) + "%"
+                pixmap = QPixmap(f'Images\{name}.png')
 
-        name0 = counter['champ0']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate0 = str(round(float(counter['champ0']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap0 = QPixmap(f'Images\{name0}.png')
-        self.BestPicked1.setPixmap(pixmap0)
-        self.BestPicked1.setPixmap(pixmap0.scaled(self.BestPicked1.size(), aspectRatioMode=True))
-        self.BestPicked1.resize(pixmap0.width(), pixmap0.height())
-        self.BestPickedWR0.setText(winRate0)
-        self.BestPickedWR0.setFont(font)
-        self.BestPickedWR0.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name = getattr(self, f'BestPicked{i+1}', None)
+                widget_name2 = getattr(self, f'BestPickedWR{i}', None)
 
-        name1 = counter['champ1']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate1 = str(round(float(counter['champ1']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap1 = QPixmap(f'Images\{name1}.png')
-        self.BestPicked2.setPixmap(pixmap1)
-        self.BestPicked2.setPixmap(pixmap1.scaled(self.BestPicked2.size(), aspectRatioMode=True))
-        self.BestPicked2.resize(pixmap1.width(), pixmap1.height())
-        self.BestPickedWR1.setText(winRate1)
-        self.BestPickedWR1.setFont(font)
-        self.BestPickedWR1.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name.setPixmap(pixmap)
+                widget_name.setPixmap(pixmap.scaled(widget_name.size(), aspectRatioMode=True))
 
-        name2 = counter['champ2']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate2 = str(round(float(counter['champ2']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap2 = QPixmap(f'Images\{name2}.png')
-        self.BestPicked3.setPixmap(pixmap2)
-        self.BestPicked3.setPixmap(pixmap2.scaled(self.BestPicked3.size(), aspectRatioMode=True))
-        self.BestPicked3.resize(pixmap2.width(), pixmap2.height())
-        self.BestPickedWR2.setText(winRate2)
-        self.BestPickedWR2.setFont(font)
-        self.BestPickedWR2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name.resize(pixmap.width(), pixmap.height())
+                widget_name2.setText(winRate)
+                widget_name2.setFont(font)
+                widget_name2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+        j = 10
+        for i in range(0,9):
+            champ_data = self.counter.get(f'champ{j}', {})  # Default to empty dict if 'champ1' is not present
+            j += 1
+            name = champ_data.get('name', '').replace("'", "").replace(" ", "").replace(".", "")
+            lose_rate_raw = champ_data.get('lose_rate', '')
+            loseRate = ""
+            if lose_rate_raw:
+                loseRate = str(round(float(lose_rate_raw.replace("% WR", "")), 1)) + "%"
+                pixmap = QPixmap(f'Images\{name}.png')
 
-        name3 = counter['champ3']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate3 = str(round(float(counter['champ3']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap3 = QPixmap(f'Images\{name3}.png')
-        self.BestPicked4.setPixmap(pixmap3)
-        self.BestPicked4.setPixmap(pixmap3.scaled(self.BestPicked4.size(), aspectRatioMode=True))
-        self.BestPicked4.resize(pixmap3.width(), pixmap3.height())
-        self.BestPickedWR3.setText(winRate3)
-        self.BestPickedWR3.setFont(font)
-        self.BestPickedWR3.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name = getattr(self, f'BestPicked{i+1}_2', None)
+                widget_name2 = getattr(self, f'BestPickedWR{i}_2', None)
 
-        name4 = counter['champ4']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate4 = str(round(float(counter['champ4']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap4 = QPixmap(f'Images\{name4}.png')
-        self.BestPicked5.setPixmap(pixmap4)
-        self.BestPicked5.setPixmap(pixmap4.scaled(self.BestPicked5.size(), aspectRatioMode=True))
-        self.BestPicked5.resize(pixmap4.width(), pixmap4.height())
-        self.BestPickedWR4.setText(winRate4)
-        self.BestPickedWR4.setFont(font)
-        self.BestPickedWR4.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name.setPixmap(pixmap)
+                widget_name.setPixmap(pixmap.scaled(widget_name.size(), aspectRatioMode=True))
 
-        name5 = counter['champ5']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate5 = str(round(float(counter['champ5']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap5 = QPixmap(f'Images\{name5}.png')
-        self.BestPicked6.setPixmap(pixmap5)
-        self.BestPicked6.setPixmap(pixmap5.scaled(self.BestPicked6.size(), aspectRatioMode=True))
-        self.BestPicked6.resize(pixmap5.width(), pixmap5.height())
-        self.BestPickedWR5.setText(winRate5)
-        self.BestPickedWR5.setFont(font)
-        self.BestPickedWR5.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+                widget_name.resize(pixmap.width(), pixmap.height())
+                widget_name2.setText(loseRate)
+                widget_name2.setFont(font)
+                widget_name2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+        print('Done')
+        #pass
 
-        name6 = counter['champ6']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate6 = str(round(float(counter['champ6']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap6 = QPixmap(f'Images\{name6}.png')
-        self.BestPicked7.setPixmap(pixmap6)
-        self.BestPicked7.setPixmap(pixmap6.scaled(self.BestPicked7.size(), aspectRatioMode=True))
-        self.BestPicked7.resize(pixmap6.width(), pixmap6.height())
-        self.BestPickedWR6.setText(winRate6)
-        self.BestPickedWR6.setFont(font)
-        self.BestPickedWR6.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        name7 = counter['champ7']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate7 = str(round(float(counter['champ7']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap7 = QPixmap(f'Images\{name7}.png')
-        self.BestPicked8.setPixmap(pixmap7)
-        self.BestPicked8.setPixmap(pixmap7.scaled(self.BestPicked8.size(), aspectRatioMode=True))
-        self.BestPicked8.resize(pixmap7.width(), pixmap7.height())
-        self.BestPickedWR7.setText(winRate7)
-        self.BestPickedWR7.setFont(font)
-        self.BestPickedWR7.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        name8 = counter['champ8']['name'].replace("'","").replace(" ","").replace(".","")
-        winRate8 = str(round(float(counter['champ8']["win_rate"].replace("% WR","")),1)) + "%"
-        pixmap8 = QPixmap(f'Images\{name8}.png')
-        self.BestPicked9.setPixmap(pixmap8)
-        self.BestPicked9.setPixmap(pixmap8.scaled(self.BestPicked9.size(), aspectRatioMode=True))
-        self.BestPicked9.resize(pixmap8.width(), pixmap8.height())
-        self.BestPickedWR8.setText(winRate8)
-        self.BestPickedWR8.setFont(font)
-        self.BestPickedWR8.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-
-        CounterName0 = counter['champ10']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate0 = str(round(float(counter['champ10']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap0 = QPixmap(f'Images\{CounterName0}.png')
-        self.BestPicked1_2.setPixmap(CounterPixmap0)
-        self.BestPicked1_2.setPixmap(CounterPixmap0.scaled(self.BestPicked1_2.size(), aspectRatioMode=True))
-        self.BestPicked1_2.resize(CounterPixmap0.width(), CounterPixmap0.height())
-        self.BestPickedWR0_2.setText(CounterWinRate0)
-        self.BestPickedWR0_2.setFont(font)
-        self.BestPickedWR0_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-
-        CounterName1 = counter['champ11']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate1 = str(round(float(counter['champ11']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap1 = QPixmap(f'Images\{CounterName1}.png')
-        self.BestPicked2_2.setPixmap(CounterPixmap1)
-        self.BestPicked2_2.setPixmap(CounterPixmap1.scaled(self.BestPicked2_2.size(), aspectRatioMode=True))
-        self.BestPicked2_2.resize(CounterPixmap1.width(), CounterPixmap1.height())
-        self.BestPickedWR1_2.setText(CounterWinRate1)
-        self.BestPickedWR1_2.setFont(font)
-        self.BestPickedWR1_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName2 = counter['champ12']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate2 = str(round(float(counter['champ12']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap2 = QPixmap(f'Images\{CounterName2}.png')
-        self.BestPicked3_2.setPixmap(CounterPixmap2)
-        self.BestPicked3_2.setPixmap(CounterPixmap2.scaled(self.BestPicked3_2.size(), aspectRatioMode=True))
-        self.BestPicked3_2.resize(CounterPixmap2.width(), CounterPixmap2.height())
-        self.BestPickedWR2_2.setText(CounterWinRate2)
-        self.BestPickedWR2_2.setFont(font)
-        self.BestPickedWR2_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName3 = counter['champ13']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate3 = str(round(float(counter['champ13']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap3 = QPixmap(f'Images\{CounterName3}.png')
-        self.BestPicked4_2.setPixmap(CounterPixmap3)
-        self.BestPicked4_2.setPixmap(CounterPixmap3.scaled(self.BestPicked3_2.size(), aspectRatioMode=True))
-        self.BestPicked4_2.resize(CounterPixmap3.width(), CounterPixmap3.height())
-        self.BestPickedWR3_2.setText(CounterWinRate3)
-        self.BestPickedWR3_2.setFont(font)
-        self.BestPickedWR3_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName4 = counter['champ14']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate4 = str(round(float(counter['champ14']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap4 = QPixmap(f'Images\{CounterName4}.png')
-        self.BestPicked5_2.setPixmap(CounterPixmap4)
-        self.BestPicked5_2.setPixmap(CounterPixmap4.scaled(self.BestPicked4_2.size(), aspectRatioMode=True))
-        self.BestPicked5_2.resize(CounterPixmap4.width(), CounterPixmap4.height())
-        self.BestPickedWR4_2.setText(CounterWinRate4)
-        self.BestPickedWR4_2.setFont(font)
-        self.BestPickedWR4_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName5 = counter['champ15']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate5 = str(round(float(counter['champ15']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap5 = QPixmap(f'Images\{CounterName5}.png')
-        self.BestPicked6_2.setPixmap(CounterPixmap5)
-        self.BestPicked6_2.setPixmap(CounterPixmap5.scaled(self.BestPicked5_2.size(), aspectRatioMode=True))
-        self.BestPicked6_2.resize(CounterPixmap5.width(), CounterPixmap5.height())
-        self.BestPickedWR5_2.setText(CounterWinRate5)
-        self.BestPickedWR5_2.setFont(font)
-        self.BestPickedWR5_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName6 = counter['champ16']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate6 = str(round(float(counter['champ16']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap6 = QPixmap(f'Images\{CounterName6}.png')
-        self.BestPicked7_2.setPixmap(CounterPixmap6)
-        self.BestPicked7_2.setPixmap(CounterPixmap6.scaled(self.BestPicked6_2.size(), aspectRatioMode=True))
-        self.BestPicked7_2.resize(CounterPixmap6.width(), CounterPixmap6.height())
-        self.BestPickedWR6_2.setText(CounterWinRate6)
-        self.BestPickedWR6_2.setFont(font)
-        self.BestPickedWR6_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName7 = counter['champ17']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate7 = str(round(float(counter['champ17']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap7 = QPixmap(f'Images\{CounterName7}.png')
-        self.BestPicked8_2.setPixmap(CounterPixmap7)
-        self.BestPicked8_2.setPixmap(CounterPixmap7.scaled(self.BestPicked7_2.size(), aspectRatioMode=True))
-        self.BestPicked8_2.resize(CounterPixmap7.width(), CounterPixmap7.height())
-        self.BestPickedWR7_2.setText(CounterWinRate7)
-        self.BestPickedWR7_2.setFont(font)
-        self.BestPickedWR7_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-        CounterName8 = counter['champ18']['name'].replace("'","").replace(" ","").replace(".","")
-        CounterWinRate8 = str(round(float(counter['champ18']["lose_rate"].replace("% WR","")),1)) + "%"
-        CounterPixmap8 = QPixmap(f'Images\{CounterName8}.png')
-        self.BestPicked9_2.setPixmap(CounterPixmap8)
-        self.BestPicked9_2.setPixmap(CounterPixmap8.scaled(self.BestPicked8_2.size(), aspectRatioMode=True))
-        self.BestPicked9_2.resize(CounterPixmap8.width(), CounterPixmap8.height())
-        self.BestPickedWR8_2.setText(CounterWinRate8)
-        self.BestPickedWR8_2.setFont(font)
-        self.BestPickedWR8_2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-
-
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-
-        print(f"Elapsed time: {elapsed_time} seconds\n")
 
     def display_image(self, image_path):
         pixmap = QtGui.QPixmap(image_path)
@@ -463,10 +342,3 @@ class MainWindow(QtWidgets.QMainWindow):
             self.label.setAlignment(QtCore.Qt.AlignCenter) 
         else:
             print(f"Error: Unable to load image from {image_path}")
-
-if __name__ == "__main__":
-    
-    app = QtWidgets.QApplication(sys.argv)
-    mainWindow = MainWindow()
-    mainWindow.show()
-    sys.exit(app.exec_())
