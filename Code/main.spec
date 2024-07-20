@@ -37,13 +37,13 @@ exe = EXE(
     [],
     exclude_binaries=True,
     name='startScreen',
-    debug=False,
+    debug=True,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
+    console=True,
     icon=None,
 )
 
