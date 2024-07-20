@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>ApproachVelocity.png</file>
+    <file>BiscuitDelivery.png</file>
+    <file>CelestialBody.png</file>
+    <file>CosmicInsight.png</file>
+    <file>FirstStrike.png</file>
+    <file>FuturesMarket.png</file>
+    <file>GlacialAugment.png</file>
+    <file>HextechFlashtraption.png</file>
+    <file>InspirationRunes.qrc</file>
+    <file>Kleptomancy.png</file>
+    <file>MagicalFootwear.png</file>
+    <file>MasterKey.png</file>
+    <file>MinionDematerializer.png</file>
+    <file>PerfectTiming.png</file>
+    <file>TimeWarpTonic.png</file>
+    <file>UnsealedSpellbook.png</file>
+  </qresource>
+</RCC>

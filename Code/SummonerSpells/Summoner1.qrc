@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Summoner1Image">
+    <file>Flash.png</file>
+  </qresource>
+</RCC>

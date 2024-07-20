@@ -1,0 +1,19 @@
+<RCC>
+  <qresource prefix="Resolve">
+    <file>Aftershock.png</file>
+    <file>BonePlating.png</file>
+    <file>Chrysalis.png</file>
+    <file>Conditioning.png</file>
+    <file>Demolish.png</file>
+    <file>FontOfLife.png</file>
+    <file>GraspOfTheUndying.png</file>
+    <file>Guardian.png</file>
+    <file>IronSkin.png</file>
+    <file>MirrorShell.png</file>
+    <file>Overgrowth.png</file>
+    <file>Resolve Runes.qrc</file>
+    <file>Revitalize.png</file>
+    <file>SecondWind.png</file>
+    <file>Unflinching.png</file>
+  </qresource>
+</RCC>
