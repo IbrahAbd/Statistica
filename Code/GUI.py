@@ -305,7 +305,7 @@ class MainWindow2(QtWidgets.QMainWindow):
             win_rate_raw = champ_data.get('win_rate', '')
             winRate = ""
             if win_rate_raw:
-                winRate = str(round(float(win_rate_raw.replace("% WR", "")), 1)) + "%"
+                winRate = str(100 - round(float(win_rate_raw.replace("% WR", "")), 1)) + "%"
                 pixmap = QPixmap(f'_internal\Images\{name}.png')
 
                 widget_name = getattr(self, f'BestPicked{i+1}', None)
@@ -326,7 +326,7 @@ class MainWindow2(QtWidgets.QMainWindow):
             lose_rate_raw = champ_data.get('lose_rate', '')
             loseRate = ""
             if lose_rate_raw:
-                loseRate = str(round(float(lose_rate_raw.replace("% WR", "")), 1)) + "%"
+                loseRate = str(100 - round(float(lose_rate_raw.replace("% WR", "")), 1)) + "%"
                 pixmap = QPixmap(f'_internal\Images\{name}.png')
 
                 widget_name = getattr(self, f'BestPicked{i+1}_2', None)
@@ -339,6 +339,17 @@ class MainWindow2(QtWidgets.QMainWindow):
                 widget_name2.setText(loseRate)
                 widget_name2.setFont(font)
                 widget_name2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
+
+
+        best_text = f"<span style='color: white;'>{self.champ}'s </span><span style='color: green;'>best</span><span style='color: white;'> matchups:</span>"
+        self.BestLabel.setText(best_text)
+        self.BestLabel.setStyleSheet("font-size: 36px;")
+
+        worst_text = f"<span style='color: white;'>{self.champ}'s </span><span style='color: red;'>worst</span><span style='color: white;'> matchups:</span>"
+        self.WorstLabel.setText(worst_text)
+        self.WorstLabel.setStyleSheet("font-size: 36px;")
+
+
         
 
 

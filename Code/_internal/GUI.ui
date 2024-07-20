@@ -974,17 +974,17 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="Bestpicked">
+   <widget class="QLabel" name="WorstLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>300</y>
-      <width>291</width>
+      <width>591</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#ffffff;&quot;&gt;Wins most into:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#aa0000;&quot;&gt;worst&lt;/span&gt;&lt;span style=&quot; font-size:26pt; color:#ffffff;&quot;&gt; matchups:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="BestPickedWR0">
@@ -1671,17 +1671,17 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="Bestpicked_2">
+   <widget class="QLabel" name="BestLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>450</y>
-      <width>291</width>
+      <width>601</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#ffffff;&quot;&gt;Gets countered by:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; color:#00ff00;&quot;&gt;best&lt;/span&gt;&lt;span style=&quot; font-size:26pt; color:#ffffff;&quot;&gt; matchups:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="backButton">
@@ -1730,7 +1730,7 @@ p, li { white-space: pre-wrap; }
    <zorder>label_4</zorder>
    <zorder>label_5</zorder>
    <zorder>label_6</zorder>
-   <zorder>Bestpicked</zorder>
+   <zorder>WorstLabel</zorder>
    <zorder>BestPickedWR0</zorder>
    <zorder>BestPickedWR1</zorder>
    <zorder>BestPickedWR2</zorder>
@@ -1750,7 +1750,7 @@ p, li { white-space: pre-wrap; }
    <zorder>BestPickedWR8_2</zorder>
    <zorder>BestPickedWR4_2</zorder>
    <zorder>gridLayoutWidget_6</zorder>
-   <zorder>Bestpicked_2</zorder>
+   <zorder>BestLabel</zorder>
    <zorder>backButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
