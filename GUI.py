@@ -4,8 +4,8 @@ from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal, QThread
+from PyQt5.QtWidgets import QMainWindow, QStackedWidget,QDialog
 import asyncio
-
 
 filePath = 'RuneDescriptions.txt'
 champFilePath = 'Champion_abilities.txt'
@@ -118,6 +118,9 @@ class ScrapingThread(QThread):
     
     
 class MainWindow2(QtWidgets.QMainWindow):
+    results_shown = pyqtSignal()
+    back_to_main = QtCore.pyqtSignal()
+
     def __init__(self,champ):
         self.champ = champ
         self.rates = {}
@@ -131,10 +134,18 @@ class MainWindow2(QtWidgets.QMainWindow):
         self.thread.scraping_done.connect(self.on_scraping_done)
         self.thread.start()
 
+        self.backButton.clicked.connect(self.on_back_button_clicked)
+        
+    def on_back_button_clicked(self):
+        self.back_to_main.emit()
+        self.close() 
+
+
     def on_scraping_done(self, rates, counter):
         self.rates = rates
         self.counter = counter
         self.show_results()
+        self.results_shown.emit()
 
     def show_results(self):
         # Ensure that this method handles the case where rates and counter might be None
@@ -157,9 +168,11 @@ class MainWindow2(QtWidgets.QMainWindow):
         self.name.setFont(font)
         self.name.setStyleSheet("color: white;")
 
-        sumSpell1 = self.rates.get('SumSpell1'[0])
-        sumSpell2 = self.rates.get('SumSpell2'[0])
-
+        sumSpell1_list = self.rates.get('SumSpell1', [])
+        sumSpell2_list = self.rates.get('SumSpell2', [])
+        sumSpell1 = ', '.join(map(str, sumSpell1_list))
+        sumSpell2 = ', '.join(map(str, sumSpell2_list))
+        
         pixmapSpell1 = QPixmap(f'SummonerSpells\{sumSpell1}.png')
         self.Summoner1.setPixmap(pixmapSpell1)
         self.Summoner1.setPixmap(pixmapSpell1.scaled(self.Summoner1.size(), aspectRatioMode=True))
@@ -329,8 +342,8 @@ class MainWindow2(QtWidgets.QMainWindow):
                 widget_name2.setText(loseRate)
                 widget_name2.setFont(font)
                 widget_name2.setStyleSheet("color: white;font-size: 18px;background-color: transparent;")
-        print('Done')
-        #pass
+        
+
 
 
     def display_image(self, image_path):

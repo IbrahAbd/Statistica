@@ -85,7 +85,7 @@ async def parse_rates(html):
                         count += 1
                     elif count == 1:
                         combo['SumSpell2'] = alt_text.split()[-1:]
-        img = soup.find_all('img', {'src': src})
+
         return combo
     
     except AttributeError as e:

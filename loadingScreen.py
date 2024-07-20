@@ -1,14 +1,12 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QHBoxLayout, QWidget, QScrollArea
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit
-from GUI import MainWindow2
+from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout,QMainWindow,QDialog
 import sys
 import os
 import random
 from PyQt5 import QtWidgets, QtGui
 
-class MainWindow3(QMainWindow):
+class MainWindow3(QtWidgets.QMainWindow):
     def __init__(self, gif_folder):
         super().__init__()
         uic.loadUi('loadingScreen.ui', self)

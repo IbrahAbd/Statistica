@@ -1,93 +1,123 @@
 import sys
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5.QtWidgets import QMainWindow, QStackedWidget, QLineEdit
+from PyQt5.QtCore import QThread, pyqtSignal
 from loadingScreen import MainWindow3
 from GUI import MainWindow2
-import time
 
-from PyQt5.QtCore import QTimer
+class ScraperThread(QThread):
+    scraping_done = pyqtSignal(str)  # Pass the champion name as a signal
 
-class MainWindow(QMainWindow):
+    def __init__(self, champ):
+        super().__init__()
+        self.champ = champ
+
+    def run(self):
+        self.scraping_done.emit(self.champ)
+
+class MainWindow1(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('StartScreen.ui', self)
-        
+
+        self.stacked_widget = self.findChild(QStackedWidget, 'stackedWidget')
+        self.lineEdit = self.findChild(QLineEdit, 'lineEdit')
+
+        self.loading_screen = None
+        self.main_window_2 = None
+
+        self.initialize_line_edit()
+
+
+    def initialize_line_edit(self):
         champions = [
-            "Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe", "AurelionSol","Aurora",
-            "Azir", "Bard","Belveth", "Blitzcrank", "Brand", "Braum","Briar", "Caitlyn", "Camille", "Cassiopeia", "ChoGath", "Corki",
+            "Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe", "AurelionSol", "Aurora",
+            "Azir", "Bard", "Belveth", "Blitzcrank", "Brand", "Braum", "Briar", "Caitlyn", "Camille", "Cassiopeia", "ChoGath", "Corki",
             "Darius", "Diana", "DrMundo", "Draven", "Ekko", "Elise", "Evelynn", "Ezreal", "Fiddlesticks", "Fiora",
             "Fizz", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Graves", "Gwen", "Hecarim", "Heimerdinger", "Hwei",
             "Illaoi", "Irelia", "Ivern", "Janna", "JarvanIV", "Jax", "Jayce", "Jhin", "Jinx", "Kaisa", "Kalista",
             "Karma", "Karthus", "Kassadin", "Katarina", "Kayle", "Kayn", "Kennen", "Khazix", "Kindred", "Kled",
-            "KogMaw","Ksante", "Leblanc", "LeeSin", "Leona", "Lillia", "Lissandra", "Lucian", "Lulu", "Lux", "Malphite","Naafiri",
-            "Malzahar", "Maokai", "MasterYi", "MissFortune","Milio" ,"Mordekaiser", "Morgana", "Nami", "Nasus", "Nautilus",
-            "Neeko", "Nidalee","Nilah", "Nocturne", "Nunu&Willump", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana",
+            "KogMaw", "Ksante", "Leblanc", "LeeSin", "Leona", "Lillia", "Lissandra", "Lucian", "Lulu", "Lux", "Malphite", "Naafiri",
+            "Malzahar", "Maokai", "MasterYi", "MissFortune", "Milio", "Mordekaiser", "Morgana", "Nami", "Nasus", "Nautilus",
+            "Neeko", "Nidalee", "Nilah", "Nocturne", "Nunu&Willump", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana",
             "Quinn", "Rakan", "Rammus", "RekSai", "Rell", "RenataGlasc", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Samira",
-            "Sejuani", "Senna", "Seraphine", "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner","Smolder",
+            "Sejuani", "Senna", "Seraphine", "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner", "Smolder",
             "Sona", "Soraka", "Swain", "Sylas", "Syndra", "TahmKench", "Taliyah", "Talon", "Taric", "Teemo", "Thresh",
             "Tristana", "Trundle", "Tryndamere", "TwistedFate", "Twitch", "Udyr", "Urgot", "Varus", "Vayne", "Veigar",
-            "Velkoz","Vex", "Vi", "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Xayah", "Xerath", "XinZhao",
-            "Yasuo", "Yone", "Yorick", "Yuumi", "Zac", "Zed","Zeri", "Ziggs", "Zilean", "Zoe", "Zyra"]
+            "Velkoz", "Vex", "Vi", "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Xayah", "Xerath", "XinZhao",
+            "Yasuo", "Yone", "Yorick", "Yuumi", "Zac", "Zed", "Zeri", "Ziggs", "Zilean", "Zoe", "Zyra"
+        ]
             
-        championsLower = ["aatrox", "ahri", "akali", "akshan", "alistar", "amumu", "anivia", "annie", "aphelios", "ashe", "aurelionsol","aurora",
-            "azir", "bard","belveth", "blitzcrank", "brand", "braum","briar", "caitlyn", "camille", "cassiopeia", "chogath", "corki",
-            "darius", "diana", "drmundo", "draven", "ekko", "elise", "evelynn", "ezreal", "fiddlesticks", "fiora",
-            "fizz", "galio", "gangplank", "garen", "gnar", "gragas", "graves", "gwen", "hecarim", "heimerdinger", "hwei",
-            "illaoi", "irelia", "ivern", "janna", "jarvaniv", "jax", "jayce", "jhin", "jinx", "kaisa", "kalista",
-            "karma", "karthus", "kassadin", "katarina", "kayle", "kayn", "kennen", "khazix", "kindred", "kled",
-            "kogmaw","ksante", "leblanc", "leesin", "leona", "lillia", "lissandra", "lucian", "lulu", "lux", "malphite","naafiri",
-            "malzahar", "maokai", "masteryi", "missfortune","milio" ,"mordekaiser", "morgana", "nami", "nasus", "nautilus",
-            "neeko", "nidalee","nilah", "nocturne", "nunu&willump", "olaf", "orianna", "ornn", "pantheon", "poppy", "pyke", "qiyana",
-            "quinn", "rakan", "rammus", "reksai", "rell", "renataglasc", "renekton", "rengar", "riven", "rumble", "ryze", "samira",
-            "sejuani", "senna", "seraphine", "sett", "shaco", "shen", "shyvana", "singed", "sion", "sivir", "skarner","smolder",
-            "sona", "soraka", "swain", "sylas", "syndra", "tahmkench", "taliyah", "talon", "taric", "teemo", "thresh",
-            "tristana", "trundle", "tryndamere", "twistedfate", "twitch", "udyr", "urgot", "varus", "vayne", "veigar",
-            "velkoz","vex", "vi", "viego", "viktor", "vladimir", "volibear", "warwick", "wukong", "xayah", "xerath", "xinzhao",
-            "yasuo", "yone", "yorick", "yuumi", "zac", "zed","zeri", "ziggs", "zilean", "zoe", "zyra"]
+        championsLower = [champ.lower() for champ in champions]
 
-        # Create buttons for each champion and add them to the layout
         for i, champ in enumerate(champions, 1):
-            if i == 50 or i == 52:
-                i += 1
             button_name = f"pushButton_{i}"
-            button = getattr(self, button_name)
-            button.setStyleSheet(f"background-image: url('Images/{champ}.png');")
-            button.setText("")
+            button = getattr(self, button_name, None)
+            if button:
+                button.setStyleSheet(f"background-image: url('Images/{champ}.png');")
+                button.setText("")
+                button.setObjectName(champ)
+                button.clicked.connect(self.on_button_clicked)
 
-        completer = QtWidgets.QCompleter(champions+championsLower)
-        
-
-        # Set QCompleter object to QLineEdit
+        completer = QtWidgets.QCompleter(champions + championsLower)
         self.lineEdit.setCompleter(completer)
         self.lineEdit.returnPressed.connect(self.on_return_pressed)
 
+    def on_button_clicked(self):
+        button = self.sender()  
+        champ_name = button.objectName()
+        self.lineEdit.setText(champ_name) 
+        self.on_return_pressed()
 
     def on_return_pressed(self):
-        
+        champ = self.lineEdit.text()
+        self.lineEdit.clear()
 
-        champ = self.lineEdit.text()  # Get the champion name from the input field
-        self.lineEdit.clear()  # Clear the input field
+        self.scraper_thread = ScraperThread(champ)
+        self.scraper_thread.scraping_done.connect(self.on_scraping_done)
+        self.scraper_thread.start()
 
-        self.hide()
-        # Show the loading screen
+    def on_scraping_done(self, champ):
+        # Create and show the loading screen
         self.loading_screen = MainWindow3("gifs")
-        self.loading_screen.show()
+        self.stacked_widget.addWidget(self.loading_screen)
+        self.stacked_widget.setCurrentWidget(self.loading_screen)
 
-        self.gui = MainWindow2(champ)
-        self.gui.thread.scraping_done.connect(self.on_scraping_done)
+        # Create MainWindow2 and connect its signal
+        self.main_window_2 = MainWindow2(champ)
+        self.main_window_2.results_shown.connect(self.on_results_shown)
+        self.main_window_2.back_to_main.connect(self.handle_back_to_main)
 
-    def on_scraping_done(self):
+        # Wait for results and switch to MainWindow2
+        self.wait_for_results_shown()
 
-        self.loading_screen.hide()
-        start_time = time.time()
-        self.gui.show()
+    def wait_for_results_shown(self):
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.check_if_results_shown)
+        self.timer.start(100)  # Check every 100 ms
 
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        print(f"Elapsed time: {elapsed_time} seconds\n")
-        
+    def check_if_results_shown(self):
+        if self.main_window_2 and hasattr(self.main_window_2, 'results_shown_emitted') and self.main_window_2.results_shown_emitted:
+            self.timer.stop()
+            if not self.stacked_widget.widget(self.stacked_widget.indexOf(self.main_window_2)):
+                self.stacked_widget.addWidget(self.main_window_2)
+            self.stacked_widget.setCurrentWidget(self.main_window_2)
+
+    def on_results_shown(self):
+        print("Results have been shown in MainWindow2.")
+        self.main_window_2.results_shown_emitted = True
+
+    def handle_back_to_main(self):
+        if self.main_window_2:
+            self.stacked_widget.removeWidget(self.main_window_2)
+            self.main_window_2.close()
+            self.main_window_2 = None
+
+        self.stacked_widget.setCurrentIndex(0)
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    mainWindow = MainWindow()
+    mainWindow = MainWindow1()
     mainWindow.show()
     sys.exit(app.exec_())
