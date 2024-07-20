@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="Champ">
+    <file>Aatrox.png</file>
+  </qresource>
+</RCC>

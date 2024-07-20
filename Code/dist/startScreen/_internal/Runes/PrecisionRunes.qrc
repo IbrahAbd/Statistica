@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="Runes">
+    <file>Conqueror.png</file>
+    <file>CoupDeGrace.png</file>
+    <file>CutDown.png</file>
+    <file>FleetFootwork.png</file>
+    <file>LegendAlacrity.png</file>
+    <file>LegendBloodline.png</file>
+    <file>LegendTenacity.png</file>
+    <file>LethalTempoTemp.png</file>
+    <file>Overheal.png</file>
+    <file>PresenceOfMind.png</file>
+    <file>PressTheAttack.png</file>
+    <file>Triumph.png</file>
+  </qresource>
+</RCC>
