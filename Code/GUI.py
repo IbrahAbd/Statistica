@@ -1,10 +1,7 @@
-import sys
-import time
 from OPGGparser import *
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal, QThread
-from PyQt5.QtWidgets import QMainWindow, QStackedWidget,QDialog
 import asyncio
 
 filePath = '_internal/RuneDescriptions.txt'
@@ -126,7 +123,7 @@ class MainWindow2(QtWidgets.QMainWindow):
         self.rates = {}
         self.counter = {}
         super().__init__()
-        uic.loadUi('_internal/GUI.ui', self) 
+        uic.loadUi('_internal\GUI.ui', self) 
         self.initUI()
 
     def initUI(self):

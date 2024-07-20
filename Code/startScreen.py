@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import QMainWindow, QStackedWidget, QLineEdit
+from PyQt5.QtWidgets import QStackedWidget, QLineEdit
 from PyQt5.QtCore import QThread, pyqtSignal
 from loadingScreen import MainWindow3
 from GUI import MainWindow2
@@ -20,7 +20,7 @@ class ScraperThread(QThread):
 class MainWindow1(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('_internal/StartScreen.ui', self)
+        uic.loadUi('_internal\StartScreen.ui', self)
 
         self.stacked_widget = self.findChild(QStackedWidget, 'stackedWidget')
         self.lineEdit = self.findChild(QLineEdit, 'lineEdit')
