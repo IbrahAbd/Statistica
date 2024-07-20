@@ -21,6 +21,7 @@ The following is an example of the process:
 
 4.) Either type a champion's name or click on their image to get matchup info!
 
-<img src="https://github.com/IbrahAbd/Webscrapper-for-League-of-legends-data-with-PyQt5-GUI/blob/master/Code/GithubGifs/githubAhri.gif" width="450" height = "300"/><img src="https://github.com/IbrahAbd/Webscrapper-for-League-of-legends-data-with-PyQt5-GUI/blob/master/Code/GithubGifs/githubViego.gif" width="450" height = "300"/>
+<img src="https://github.com/IbrahAbd/Webscrapper-for-League-of-legends-data-with-PyQt5-GUI/blob/master/Code/GithubGifs/githubAhri.gif" width="600" height = "350"/>
+<img src="https://github.com/IbrahAbd/Webscrapper-for-League-of-legends-data-with-PyQt5-GUI/blob/master/Code/GithubGifs/githubViego.gif" width="600" height = "350"/>
 
 
