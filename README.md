@@ -1,4 +1,4 @@
-# U.gg Web scraper making use of PYQT5 for GUI 
+# U.gg Python Web Scraper making use of PYQT5 for GUI 
 
 An application that scapes match up information for a particular League of Legends character and returns the result in a simplified format.  
 Once a character is selected either by text or via button input, a loading screen is presented with a whimsical gif relating to the game. The statistics are then displayed once they are ready.    
