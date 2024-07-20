@@ -1,4 +1,3 @@
-import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout,QMainWindow,QDialog
 import sys
